@@ -1,0 +1,20 @@
+ ### 全局控制机制 ###
+log4j.rootLogger = debug ,  stdout
+
+#log4j日志分为五种级别
+#  			debug(级别最低,调试(开发阶段))
+#  			info (运行信息(测试或者运行阶段))
+#  			warn (警告信息)
+#  			error (错误信息)
+#  			fatal (系统错误信息,最严重的)
+#  		通过五种级别输出的日志,会打印在文件中
+#  		
+#  		有个全局控制机制:
+#  			root=debug
+#  		日志的级别 fatal>error>warn>info>debug,所有全局控制中设置的级别以下的所有日志都不打印,比如设置info,不打印debug,设置fatal,前面四个日志都不好打印
+
+### 输出到控制台 ###
+log4j.appender.stdout = org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.Target = System.out
+log4j.appender.stdout.layout = org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern =%-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n

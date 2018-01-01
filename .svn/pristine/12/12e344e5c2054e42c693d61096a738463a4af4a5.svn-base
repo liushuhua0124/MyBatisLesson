@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	 <!-- 是mybatis核心配置文件
+		1:配置数据库的连接信息(连接池)
+	-->
+  <properties resource="oracle.properties">
+  </properties>
+  <environments default="development">
+  <!-- 每种返回的数据类型,都可以设置简单的别名,默认的别名可以在TypeAliasRegistry里找 -->
+    <environment id="development">
+      <!-- 事务管理器, 默認使用jdbc事務 -->
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driverClass}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${userid}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+  	<mapper class="cn.et.lesson02.annotion.FoodMapper"/>
+  </mappers>
+</configuration>

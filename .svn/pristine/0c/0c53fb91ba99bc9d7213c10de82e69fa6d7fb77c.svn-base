@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	 
+<mapper namespace="cn.et.lesson03.result.xml.GradeMapper">
+	<!-- 结果集映射:
+		数据库的列名和实体类的属性名如果不一致,需要建立列名和属性名的映射关系
+		结果集映射返回的结果是相同的,只是多了一层关系	
+		
+		定义结果集
+		
+		autoMapping="true" 值为true,属性名和字段名一样会自动映射
+		autoMapping="false" 值false,属性名和字段名要自动映射
+	 -->
+	<resultMap type="grade" id="gradeMap" autoMapping="true">
+		<!-- 列和属性的关系:主键使用id,非主键使用result -->
+		<id column="gid" property="gid"/>
+		<result column="gname" property="gname1"/>
+	</resultMap>
+
+
+	<select id="queryAllGrade" resultMap="gradeMap">
+		select * from grade
+	</select>
+</mapper>

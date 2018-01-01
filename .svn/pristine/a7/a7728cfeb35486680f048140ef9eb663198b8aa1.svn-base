@@ -1,0 +1,43 @@
+package cn.et.lesson04.anno;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
+
+import cn.et.lesson04.anno.StudentMapper;
+import cn.et.lesson04.xml.Student;
+
+public class MethodTest {
+	public static SqlSession getSession() {
+		String resource = "cn/et/lesson04/anno/mybatis.xml";
+		InputStream inputStream;
+		SqlSession session = null;
+		try {
+			inputStream = Resources.getResourceAsStream(resource);
+			//工厂类
+			SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+			session = sqlSessionFactory.openSession();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return session;
+	}
+	
+	@Test
+	public void testQuery() {
+		SqlSession session = getSession();
+		StudentMapper mapper = session.getMapper(StudentMapper.class);
+		Student student = new Student();
+//		student.setSname("张");
+		List<Student> queryStudent = mapper.queryStudent(student);
+		for (Student student2 : queryStudent) {
+			System.out.println(student2.getSname());
+		}
+	}
+}

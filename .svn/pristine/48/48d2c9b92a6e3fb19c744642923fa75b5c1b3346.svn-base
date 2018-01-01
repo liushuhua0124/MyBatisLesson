@@ -1,0 +1,17 @@
+package cn.et.lesson04.xml;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+
+public interface StudentMapper {
+	//通过编号查询学生
+	public List<Student> queryStudent(Student student);
+	
+	//根据性别来查所有的学生
+	public List<Student> queryBySex(@Param("sex") String sex);
+	
+	//更新学生信息
+	public List<Student> updateStudent(Student student);
+}

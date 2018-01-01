@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace标签:用于区分多个文件中相同的id,必须要的,不能不写
+   比如 a.xml (namespace=a)
+   id="test"
+    b.xml (namespace=b)
+   id="test"
+   a.test
+   b.test
+ -->
+<mapper namespace="a">
+  <select id="selectFood" resultType="java.util.Map">
+    select * from food
+  </select>
+  <select id="selectFoodById" resultType="java.util.Map">
+    select * from food where foodid=1
+  </select>
+  
+  <!-- 查询的条件 
+  		传个价格 = 10
+  		穿个菜名 = 青椒
+  		可以传个map进来
+  		map {
+  			price = 10,
+  			foodname = 青椒
+  		}
+  		
+  		log4j日志分为五种级别
+  			debug(级别最低,调试(开发阶段))
+  			info (运行信息(测试或者运行阶段))
+  			warn (警告信息)
+  			error (错误信息)
+  			fatal (系统错误信息,最严重的)
+  		通过五种级别输出的日志,会打印在文件中
+  		
+  		有个全局控制机制:
+  			root=debug
+  		日志的级别 fatal>error>warn>info>debug,所有全局控制中设置的级别以下的所有日志都不打印,比如设置info,不打印debug,设置fatal,前面四个日志都不好打印
+  		
+  	重点:面试必问
+  		使用#{键}的方式,实际上是使用占位符?来替代
+  		使用${键}的方式,实际上是使用值,直接替换对应的键,注意:如果是字符串必须要手工添加''号,不然sql语句出错
+  -->
+  <select id="selectFoodBy" resultType="java.util.Map">
+  	select * from food where price = ${price} and foodname = '${foodname}'
+  </select>
+  
+  <insert id="saveFood">
+  	insert into food values(FOOD_SEC.nextval,#{foodname},#{price})
+  </insert>
+  
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	 
+<mapper namespace="cn.et.lesson05.xml.StudentMapper">
+	
+	<!-- mybatis默认缓存类是FifoCache
+		FIFO:内存数据不足时,需要一种机制来保证内存不出现溢出,需要将旧的数据清除,最先加入的数据最先清除
+		LRU:(Least Recently Used) 最近使用次数最少的,被优先清除
+		LFU:最近一段时间内使用次数最少的
+	 -->
+	<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true">
+		
+	</cache>
+
+	<select id="queryStudentByID" resultType="student">
+		select * from student where sid = #{0}
+	</select>	
+</mapper>

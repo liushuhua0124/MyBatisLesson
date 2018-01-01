@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<!-- 绑定接口,将接口中的方法和对应的sql声明进行绑定
+		接口绑定的参数,可以通过索引的方式获取,索引从0开始
+		比如('sex','abc')		0='sex'	 1='abc' 
+		还可以通过			param1='sex'	param2='abc'
+	 -->
+<mapper namespace="proc">
+	<select id="queryFood" resultType="map">
+		select * from food where foodname = #{param1} and price = #{param2}
+ 	</select>
+ 	
+ 	<select id="queryFoodname" resultType="food">
+		select * from food where foodname like '%${foodname}%'
+ 	</select>
+ 	
+ 	<delete id="deleteFood">
+ 		delete from food where foodid = #{0}
+ 	</delete>
+ 	
+ 	<insert id="saveFood" >
+ 		<selectKey keyProperty="foodid" order="BEFORE" resultType="int" statementType="STATEMENT">
+ 		<!-- selectKey获取插入的主键 -->
+ 			select FOOD_SEC.nextval from dual
+ 		</selectKey>
+ 		insert into food values(#{foodid},#{foodname},#{price})
+ 	</insert>
+ 	
+ 	<!-- 存储过程是一种特殊的sql 
+ 		jdbc调用存储过程的语法
+ 			{call 存储过程名(?,?)}  
+ 		jdbc调用函数的语法
+ 			{?=call 函数名(?,?)}
+ 			
+ 			调用存储过程必须把statementType="CALLABLE",不然会把存储函数当成sql语句来执行
+ 	-->
+ 	<select id="call_PRG_ADD" resultType="java.util.Map" statementType="CALLABLE">
+ 		{call prg_add(
+         #{p1,mode=IN,jdbcType=NUMERIC},
+         #{p2,mode=IN,jdbcType=NUMERIC},
+         #{result,mode=OUT,jdbcType=NUMERIC})}
+ 	</select>
+ 	
+ 	<!-- 调用函数 -->
+ 	<select id="call_FUN_ADD" resultType="java.util.Map" statementType="CALLABLE">
+ 		{#{result,mode=OUT,jdbcType=NUMERIC}=call fun_add(
+         #{p1,mode=IN,jdbcType=NUMERIC},
+         #{p2,mode=IN,jdbcType=NUMERIC}
+         )}
+ 	</select>
+</mapper>
